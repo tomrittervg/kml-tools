@@ -41,4 +41,27 @@ trackpointsRead = len(placemarks)
 
 print "Read " + str(trackpointsRead) + " points."
 
-
+selection = {}
+tp = raw_input("Specify individual or ranges of trackpoints to export.\n")
+while tp != "":
+	arr = tp.partition('-')
+	if arr[2] == "":
+		selection[int(arr[0])] = True
+		print "Added", arr[0], "to the selection."
+	else:
+		for x in range(int(arr[0]), int(arr[2])+1):
+			selection[x] = True
+		print "Added", arr[0] + "-" + arr[2], "to the selection."
+	
+	print ""
+	tp = raw_input("Specify individual or ranges of trackpoints to export.\n")
+	
+sKeys = selection.keys()
+sKeys.sort()
+for s in sKeys:
+	p = placemarks[s]
+	name = getText(p.getElementsByTagName("name")[0])
+	if int(name.rpartition('-')[2]) != s:
+		print "Error '" + name + "' does not match", s
+	else:
+		print "Adding", s
