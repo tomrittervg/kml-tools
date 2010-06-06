@@ -49,7 +49,13 @@ while tp != "":
 		selection[int(arr[0])] = True
 		print "Added", arr[0], "to the selection."
 	else:
-		for x in range(int(arr[0]), int(arr[2])+1):
+		start = int(arr[0])
+		end = int(arr[2])
+		if start > end:
+			x = start
+			start = end
+			end = x
+		for x in range(start, end+1):
 			selection[x] = True
 		print "Added", arr[0] + "-" + arr[2], "to the selection."
 	
