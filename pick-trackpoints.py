@@ -56,6 +56,11 @@ while tp != "":
 	print ""
 	tp = raw_input("Specify individual or ranges of trackpoints to export.\n")
 	
+formatString = raw_input("Specify the format of the outpute string, [lat] for latitude, [lng] for longitude.\n")
+filename = raw_input("Specify the filename to write to.\n")
+
+handle = open(filename, 'w')
+
 sKeys = selection.keys()
 sKeys.sort()
 for s in sKeys:
@@ -64,4 +69,9 @@ for s in sKeys:
 	if int(name.rpartition('-')[2]) != s:
 		print "Error '" + name + "' does not match", s
 	else:
-		print "Adding", s
+		lookat = p.getElementsByTagName("LookAt")[0]
+		lat = getText(lookat.getElementsByTagName("latitude")[0])
+		lng = getText(lookat.getElementsByTagName("longitude")[0])
+		handle.write(formatString.replace("[lat]", lat).replace("[lng]", lng) + "\n")
+
+print "Done"
